@@ -286,6 +286,7 @@ function setObjectsCells() {
             ["Diagnosis.Tower_" + (towerNumber + 1) + ".ETA", "state", "Wirkungsgrad of that tower", "number", "value", true, false, ""],
             ["Diagnosis.Tower_" + (towerNumber + 1) + ".BatteryVolt", "state", "Wirkungsgrad of that tower", "number", "value", true, false, ""],
             ["Diagnosis.Tower_" + (towerNumber + 1) + ".OutVolt", "state", "Output voltage", "number", "value", true, false, ""],
+            ["Diagnosis.Tower_" + (towerNumber + 1) + ".Current", "state", "Current of Tower", "number", "value", true, false, "A"],
             ["Diagnosis.Tower_" + (towerNumber + 1) + ".SOC", "state", "SOC (Diagnosis)", "number", "value.battery", true, false, "%"],
             ["Diagnosis.Tower_" + (towerNumber + 1) + ".SOH", "state", "State of Health", "number", "value", true, false, ""],
             ["Diagnosis.Tower_" + (towerNumber + 1) + ".State", "state", "tower state", "string", "value", true, false, ""],
@@ -661,6 +662,7 @@ function decodePacket5(data, towerNumber = 0) {
     towerAttributes[towerNumber].outVolt = buf2int16SI(byteArray, 51);
     towerAttributes[towerNumber].hvsSOCDiagnosis = parseFloat((buf2int16SI(byteArray, 53) * 1.0 / 10.0).toFixed(1));
     towerAttributes[towerNumber].soh = parseFloat((buf2int16SI(byteArray, 55) * 1.0).toFixed(1));
+    towerAttributes[towerNumber].current = parseFloat((buf2int16SI(byteArray, 57) * 1.0 / 10.0).toFixed(1));
     towerAttributes[towerNumber].state = byteArray[59].toString(16) + byteArray[60].toString(16);
 }
 
@@ -841,6 +843,7 @@ Invert. Type    >${hvsInvType_String}, Nr: ${hvsInvType}<`);
                     adapter.setState(`Diagnosis.Tower_${t+1}.SOC`, towerAttributes[t].hvsSOCDiagnosis, true);
                     adapter.setState(`Diagnosis.Tower_${t+1}.SOH`, towerAttributes[t].soh, true);
                     adapter.setState(`Diagnosis.Tower_${t+1}.State`, towerAttributes[t].state, true);
+                    adapter.setState(`Diagnosis.Tower_${t+1}.Current`, towerAttributes[t].current, true);
 
                     if (towerAttributes[t].balacing) adapter.setState(`Diagnosis.Tower_${t+1}.BalancingOne`, towerAttributes[t].balacing, true);
                     adapter.setState(`Diagnosis.Tower_${t+1}.BalancingTwo`, towerAttributes[t].balacing_two ? towerAttributes[t].balacing_two : "", true);
