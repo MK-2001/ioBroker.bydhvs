@@ -1111,7 +1111,7 @@ IPClient.on("data", function (data) {
 IPClient.on("timeout", function () {
     IPClient.destroy();
     setConnected(adapter, false);
-    adapter.log.error(`no connection in state ${myState} to IP: ${adapter.config.ConfIPAdress}`);
+    adapter.log.warn(`no connection in state ${myState} to IP: ${adapter.config.ConfIPAdress}`);
     myState = 0;
 });
 
@@ -1119,7 +1119,7 @@ IPClient.on("error", function () {
     IPClient.destroy();
     setConnected(adapter, false);
     myState = 0;
-    adapter.log.error("Error connecting to " + adapter.config.ConfIPAdress);
+    adapter.log.warn("Error connecting to " + adapter.config.ConfIPAdress);
 });
 
 
